@@ -26,7 +26,9 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 
 	  //Attributes
 	  private JButton ChooseFile;
+	  private String ftext;
 	  private JButton Results;
+	  private JButton Enter;
 	  private JTextField quantity;
 	  private int fint;
 	  private String text;
@@ -35,6 +37,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  //create a section of screen (panel) that will hold some GUI components 
 	  JPanel PanelN = new JPanel();
 	  JPanel PanelC= new JPanel();
+	  JPanel PanelS = new JPanel();
 	  		  	 
 	  //Constructor
 	  public GUI(String title)
@@ -48,12 +51,25 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   //add the panel to the screen ,set background colour and panel dimensions
 		   add(PanelN, BorderLayout.NORTH);
 		   PanelN.setBackground(Color.gray);
-		   
-		   add(PanelC, BorderLayout.SOUTH);
-		   PanelC.setBackground(Color.gray);
+		   add(PanelC, BorderLayout.CENTER);
+		   PanelC.setBackground(Color.white);
+		   add(PanelS, BorderLayout.SOUTH);
+		   PanelS.setBackground(Color.gray);
 	
 		   label1  = new JLabel("Enter amount of files to compare");
 		   PanelC.add(label1); 
+		   
+		   quantity = new JTextField();
+		   quantity.setPreferredSize(new Dimension(120, 30));
+		   PanelC.add(quantity,BorderLayout.CENTER);
+		   quantity.addActionListener(this);
+		   quantity.setToolTipText("Enter number of files to compare");
+		   
+		   Enter = new JButton("Enter");
+		   Enter.setPreferredSize(new Dimension(140, 30));
+		   Enter.addActionListener(this);
+		   
+		   PanelC.add(Enter);
 		   
 			// set the location of the screen  
 		   setLocation(500,100);
@@ -61,41 +77,30 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   // Define the size of the frame  
 		   setSize(300,300);
 		   
-		   
-		   
-		   //Instantiate new buttons
-		   ChooseFile = new JButton("Choose File");
-		   ChooseFile.setPreferredSize(new Dimension(100, 40));
-		   ChooseFile.addActionListener(this);
-		   
-		   Results = new JButton("Results");
-		   Results.setPreferredSize(new Dimension(100, 40));
-		   Results.addActionListener(this);
-		   
-			//Add Buttons to the panels and add listener  
-		   PanelN.add(ChooseFile);
-		   PanelN.add(Results);
-		   
-		   quantity = new JTextField();
-		   quantity.setPreferredSize(new Dimension(120, 30));
-		   PanelC.add(quantity,BorderLayout.CENTER);
-		   quantity.addActionListener(this);
-		   quantity.setToolTipText("Enter number of file to compare");
-		   
 		// make the screen appear - without this, it doesn't!  
 		   setVisible(true);
 		   	   
 	 }
-	  
-	 public void actionPerformed(ActionEvent event) {
-		 
-		 /*if(event.getSource() == ChooseFile){
-			 JFileChooser FC = new JFileChooser();
-			 JButton open = new JButton();
-			 FileChooser.File();*/
-		 }
-			
-	 
+			  
+	public void actionPerformed(ActionEvent event) {
+		
+	if((event.getSource()== Enter)) 
+			{
+				ftext = quantity.getText();
+			try 
+			{
+				fint = Integer.parseInt(ftext.replace(" ",""));
+			}
+			catch(NumberFormatException e) 
+			{
+				JOptionPane.showMessageDialog(this, "Your input is invalid\nPlease enter a positive integer");
+				return;
+			}
+				 
+		}
+	
+		FileChooser.File();
+	}
 	public void mouseClicked(MouseEvent e) {
 	
 		 
