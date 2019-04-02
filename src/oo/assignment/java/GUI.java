@@ -26,9 +26,8 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 
 	  //Attributes
 	  private JButton ChooseFile;
-	  private String ftext;
 	  private JButton Results;
-	  private JButton Enter;
+	  private String ftext;
 	  private JTextField quantity;
 	  private int fint;
 	  private String text;
@@ -56,20 +55,20 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   add(PanelS, BorderLayout.SOUTH);
 		   PanelS.setBackground(Color.gray);
 	
-		   label1  = new JLabel("Enter amount of files to compare");
+		   label1  = new JLabel("Please choose an Option");
 		   PanelC.add(label1); 
 		   
-		   quantity = new JTextField();
-		   quantity.setPreferredSize(new Dimension(120, 30));
-		   PanelC.add(quantity,BorderLayout.CENTER);
-		   quantity.addActionListener(this);
-		   quantity.setToolTipText("Enter number of files to compare");
 		   
-		   Enter = new JButton("Enter");
-		   Enter.setPreferredSize(new Dimension(140, 30));
-		   Enter.addActionListener(this);
+		   ChooseFile = new JButton("Choose Files");
+		   ChooseFile.setPreferredSize(new Dimension(140, 30));
+		   ChooseFile.addActionListener(this);
 		   
-		   PanelC.add(Enter);
+		   Results = new JButton("Display Results");
+		   Results.setPreferredSize(new Dimension(140, 30));
+		   Results.addActionListener(this);
+		   
+		   PanelC.add(ChooseFile);
+		   PanelC.add(Results);
 		   
 			// set the location of the screen  
 		   setLocation(500,100);
@@ -77,30 +76,23 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   // Define the size of the frame  
 		   setSize(300,300);
 		   
-		// make the screen appear - without this, it doesn't!  
+		   // make the screen appear - without this, it doesn't!  
 		   setVisible(true);
 		   	   
 	 }
 			  
 	public void actionPerformed(ActionEvent event) {
-		
-	if((event.getSource()== Enter)) 
-			{
-				ftext = quantity.getText();
-			try 
-			{
-				fint = Integer.parseInt(ftext.replace(" ",""));
-			}
-			catch(NumberFormatException e) 
-			{
-				JOptionPane.showMessageDialog(this, "Your input is invalid\nPlease enter a positive integer");
-				return;
-			}
-				 
+		if(event.getSource() == Results){
+			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
 		}
-	
-		FileChooser.File();
+		
+		else {
+			JOptionPane.showMessageDialog(this, "You will now select files");
+			
+			FileChooser.File(); 
+		}
 	}
+		
 	public void mouseClicked(MouseEvent e) {
 	
 		 

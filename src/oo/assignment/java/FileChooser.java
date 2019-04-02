@@ -2,7 +2,7 @@ package oo.assignment.java;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
+import java.io.*;
 
 public class FileChooser {
 	
@@ -10,8 +10,8 @@ public class FileChooser {
 		JFileChooser FC = new JFileChooser();
 		JButton open = new JButton();
 		
-		FC.setMultiSelectionEnabled(true); //Select more than one file
-		
+		FC.setMultiSelectionEnabled(true);
+				
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 		FC.setFileFilter(filter); //Filter to make sure only text files can be selected
 		
@@ -23,9 +23,11 @@ public class FileChooser {
 		}
 		
 		System.out.println("You chose the file: "+FC.getSelectedFile().getAbsolutePath());
-	
+			
+		File[] files  = FC.getSelectedFiles();
+		
+		System.out.print(files);
 	}
-
 
 }
 
