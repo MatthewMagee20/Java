@@ -18,8 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
-
-import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class GUI extends JFrame implements ActionListener,MouseListener 
 {
@@ -89,8 +91,10 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		else {
 			JOptionPane.showMessageDialog(this, "You will now select files");
 			
-			FileChooser.File(); 
+			
 		}
+		
+		FileChooser.FileChooser();
 	}
 		
 	public void mouseClicked(MouseEvent e) {
