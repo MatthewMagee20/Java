@@ -36,6 +36,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  private int fint;
 	  private String text;
 	  private JLabel label1;
+	  boolean gencheck;
 	  
 	  GUI(JButton open){
 		  this.open = open;
@@ -89,14 +90,19 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	 }
 			  
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == open || event.getSource() == Results){
-			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
-			
+		if(event.getSource() == open || event.getSource() == ChooseFile)
+		{
+			JOptionPane.showMessageDialog(this, "You will now select files");
+			gencheck = true;
+			try {
+				FileChooser.FileChooser(open);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		else {
-			JOptionPane.showMessageDialog(this, "You will now select files");
-			FileChooser.FileChooser(open);
+		else if(event.getSource() == Results) {
+			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
 		}
 		
 			

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JButton;
@@ -29,18 +30,31 @@ import java.util.Random;
 
 public class FileChooser extends JPanel {
 
-	public static void FileChooser(JButton open){
+	public static void FileChooser(JButton open) throws IOException{
 		
+		
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 		JFileChooser FC = new JFileChooser();
 		FC.setMultiSelectionEnabled(true);
-		int x = FC.showOpenDialog(null);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 		FC.setFileFilter(filter); //Filter to make sure only text files can be selected
 		FC.setDialogTitle("Choose File");
-						
+		int x = FC.showOpenDialog(null);	
+		File files = FC.getSelectedFile();
+		FileReader reader = new FileReader(files);
+		
 		if(x == JFileChooser.APPROVE_OPTION)
 		{
-		File files = FC.getSelectedFile();
+			 int i = reader.read();
+		       while (i != -1)
+		       {
+		           // Convert to char and print
+		           char ch = (char)i;
+		           System.out.print(ch);
+		           // Get next  from read()
+		           i = reader.read();
+		       }
+		       // reader.close();
+		     }
 		try
 		{
 			Desktop.getDesktop().open(files);
@@ -51,6 +65,6 @@ public class FileChooser extends JPanel {
 	}
 }
 
-}
+
 
 
