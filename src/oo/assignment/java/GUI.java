@@ -20,6 +20,7 @@ import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -29,12 +30,16 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  //Attributes
 	  private JButton ChooseFile;
 	  private JButton Results;
+	  private JButton open;
 	  private String ftext;
 	  private JTextField quantity;
 	  private int fint;
 	  private String text;
 	  private JLabel label1;
 	  
+	  GUI(JButton open){
+		  this.open = open;
+	  }
 	  //create a section of screen (panel) that will hold some GUI components 
 	  JPanel PanelN = new JPanel();
 	  JPanel PanelC= new JPanel();
@@ -84,17 +89,18 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	 }
 			  
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == Results){
+		if(event.getSource() == open || event.getSource() == Results){
 			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
+			
 		}
 		
 		else {
 			JOptionPane.showMessageDialog(this, "You will now select files");
-			
-			
+			FileChooser.FileChooser(open);
 		}
 		
-		FileChooser.FileChooser();
+			
+
 	}
 		
 	public void mouseClicked(MouseEvent e) {
