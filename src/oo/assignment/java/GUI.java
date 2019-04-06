@@ -30,6 +30,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  //Attributes
 	  private JButton ChooseFile;
 	  private JButton Results;
+	  private JButton StopWords;
 	  private JButton open;
 	  private String ftext;
 	  private JTextField quantity;
@@ -75,8 +76,13 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   Results.setPreferredSize(new Dimension(140, 30));
 		   Results.addActionListener(this);
 		   
-		   PanelC.add(ChooseFile);
-		   PanelC.add(Results);
+		   StopWords = new JButton("Stop Words");
+		   StopWords.setPreferredSize(new Dimension(140, 30));
+		   StopWords.addActionListener(this);
+		   
+		   PanelN.add(ChooseFile);
+		   PanelN.add(Results);
+		   PanelN.add(StopWords);
 		   
 			// set the location of the screen  
 		   setLocation(500,100);
@@ -103,6 +109,10 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		
 		else if(event.getSource() == Results) {
 			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
+		}
+		
+		else if(event.getSource() == StopWords) {
+			
 		}
 		
 			
