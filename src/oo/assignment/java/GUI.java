@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
@@ -23,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import oo.assignment.*;
 
 public class GUI extends JFrame implements ActionListener,MouseListener 
 {
@@ -32,10 +34,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  private JButton Results;
 	  private JButton StopWords;
 	  private JButton open;
-	  private String ftext;
-	  private JTextField quantity;
-	  private int fint;
-	  private String text;
+	  private JTextArea textarea;
 	  private JLabel label1;
 	  boolean gencheck;
 	  
@@ -46,7 +45,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  JPanel PanelN = new JPanel();
 	  JPanel PanelC= new JPanel();
 	  JPanel PanelS = new JPanel();
-	  		  	 
+	    		  	 
 	  //Constructor
 	  public GUI(String title)
 	  {
@@ -59,13 +58,14 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   //add the panel to the screen ,set background colour and panel dimensions
 		   add(PanelN, BorderLayout.NORTH);
 		   PanelN.setBackground(Color.gray);
+		   PanelN.setPreferredSize(new Dimension(580, 50));
 		   add(PanelC, BorderLayout.CENTER);
 		   PanelC.setBackground(Color.white);
 		   add(PanelS, BorderLayout.SOUTH);
 		   PanelS.setBackground(Color.gray);
-	
+		   
 		   label1  = new JLabel("Please choose an Option");
-		   PanelC.add(label1); 
+		   PanelN.add(label1); 
 		   
 		   
 		   ChooseFile = new JButton("Choose Files");
@@ -79,7 +79,11 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   StopWords = new JButton("Stop Words");
 		   StopWords.setPreferredSize(new Dimension(140, 30));
 		   StopWords.addActionListener(this);
-		   
+
+		   textarea = new JTextArea();
+		   this.setPreferredSize(new Dimension(200, 200));
+	        this.add(textarea, BorderLayout.CENTER);
+		 
 		   PanelN.add(ChooseFile);
 		   PanelN.add(Results);
 		   PanelN.add(StopWords);
@@ -88,7 +92,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   setLocation(500,100);
 
 		   // Define the size of the frame  
-		   setSize(300,300);
+		   setSize(600,500);
 		   
 		   // make the screen appear - without this, it doesn't!  
 		   setVisible(true);
@@ -109,6 +113,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		
 		else if(event.getSource() == Results) {
 			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
+			textarea.setText("Generate Results Here....");
 		}
 		
 		else if(event.getSource() == StopWords) {
@@ -118,6 +123,8 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 			
 
 	}
+	
+	
 		
 	public void mouseClicked(MouseEvent e) {
 	
