@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -39,92 +40,30 @@ import java.util.Map;
 import java.util.Random;
 
 public class FileChooser extends JPanel {
-
-	public static void FileChooser(JButton open) throws IOException{
+	
+static void FileChooser(JButton open) throws IOException{
+		
+		File file = null;
+		Results result = null;
+			
+		JFileChooser FC = new JFileChooser();
+		
+		FC.setMultiSelectionEnabled(true);	//Enables selection of more than one file
 		
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-		JFileChooser FC = new JFileChooser();
-		FC.setMultiSelectionEnabled(true);			//Enables selection of more than one file
 		FC.setFileFilter(filter); 					//Filter to make sure only text files can be selected
+
 		FC.setDialogTitle("Choose File");
-		int x = FC.showOpenDialog(null);	
-		File files = FC.getSelectedFile();
 		
- 
+		int x = FC.showOpenDialog(null);	
+
+		
 		if(x == JFileChooser.APPROVE_OPTION)
 		{
-			files = FC.getSelectedFile();
-			BufferedReader reader = new BufferedReader(new FileReader(files));
-			Map<String, Integer> frequency = new HashMap<>();
-			
-			String line = reader.readLine();
-			while(line != null) {
-				System.out.println("Processing line: " + line);
-				
-				if(!line.trim().equals("")) {
-					String [] words = line.split(" ");
-					
-					for(String word : words) {
-						if(word == null || word.trim().equals("")) {
-							continue;
-						}
-						String processed = word.toLowerCase();
-						processed = processed.replace(",", "");
-						
-						if(frequency.containsKey(processed)) {
-							frequency.put(processed, 
-									frequency.get(processed) + 1);
-						} else {
-							frequency.put(processed, 1);
-						}
-					}
-				}
-				
-				line = reader.readLine();
-			}
-			
-			
-			System.out.println(frequency);
-			
-			int mostFrequentlyUsed = 0;
-			String theWord = null;
-			
-			for(String word : frequency.keySet()) {
-				Integer theVal = frequency.get(word);
-				if(theVal > mostFrequentlyUsed) {
-					mostFrequentlyUsed = theVal;
-					theWord = word;
-				}
-			}
-			System.out.println();
-			System.out.printf("the most frequently used word is '%s', %d times", 
-					theWord, mostFrequentlyUsed);
-			
+			File files = FC.getSelectedFile();
+			result = new Results(files);
 		}
-
+			
 	}
-		}
-		
-
-		/*try
-		{
-			Desktop.getDesktop().open(files);
-		}catch(IOException EE)
-		{
-			System.out.println("FAIL");
-		}
-	}
+			
 }
-
-/*int i = reader.read();
-while (i != -1)
-{
-    // Convert to char and print
-    char ch = (char)i;
-    System.out.print(ch);
-    // Get next  from read()
-    i = reader.read();
-    j++;
-}*/
-
-

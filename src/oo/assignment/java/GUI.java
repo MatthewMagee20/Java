@@ -32,11 +32,11 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  //Attributes
 	  private JButton ChooseFile;
 	  private JButton Results;
-	  private JButton StopWords;
 	  private JButton open;
 	  private JTextArea textarea;
 	  private JLabel label1;
 	  boolean gencheck;
+	  Results result;
 	  
 	  GUI(JButton open){
 		  this.open = open;
@@ -76,17 +76,12 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   Results.setPreferredSize(new Dimension(140, 30));
 		   Results.addActionListener(this);
 		   
-		   StopWords = new JButton("Stop Words");
-		   StopWords.setPreferredSize(new Dimension(140, 30));
-		   StopWords.addActionListener(this);
-
 		   textarea = new JTextArea();
 		   this.setPreferredSize(new Dimension(200, 200));
-	        this.add(textarea, BorderLayout.CENTER);
+	       this.add(textarea, BorderLayout.CENTER);
 		 
 		   PanelN.add(ChooseFile);
 		   PanelN.add(Results);
-		   PanelN.add(StopWords);
 		   
 			// set the location of the screen  
 		   setLocation(500,100);
@@ -111,21 +106,22 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 			}
 		}
 		
-		else if(event.getSource() == Results) {
-			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
-			textarea.setText("Generate Results Here....");
+		else if(event.getSource() == Results && gencheck == true) {
+						textarea.setText("Generate Results Here....");
+						
+
 		}
 		
-		else if(event.getSource() == StopWords) {
-			
+		else
+		{			
+			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
+
 		}
 		
 			
 
 	}
 	
-	
-		
 	public void mouseClicked(MouseEvent e) {
 	
 		 
