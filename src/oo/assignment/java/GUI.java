@@ -41,6 +41,15 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 	  GUI(JButton open){
 		  this.open = open;
 	  }
+	  
+	  public void setTextArea(JTextArea textarea){
+		  this.textarea = textarea;
+		}
+
+		public JTextArea getTextArea(){
+		  return this.textarea;
+		}
+
 	  //create a section of screen (panel) that will hold some GUI components 
 	  JPanel PanelN = new JPanel();
 	  JPanel PanelC= new JPanel();
@@ -77,6 +86,7 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		   Results.addActionListener(this);
 		   
 		   textarea = new JTextArea();
+		   textarea.setEditable(false);
 		   this.setPreferredSize(new Dimension(200, 200));
 	       this.add(textarea, BorderLayout.CENTER);
 		 
@@ -107,10 +117,13 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		}
 		
 		else if(event.getSource() == Results && gencheck == true) {
-						textarea.setText("Generate Results Here....");
+			
+			public add(String string) {
+			    textarea.append(string);
+			}
 						
-
-		}
+			}
+		
 		
 		else
 		{			

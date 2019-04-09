@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,14 +17,9 @@ public class Results extends JPanel {
 	
 	Scanner scanner;
 	private File files;
-
-
-
-
-
+	
 	public Results(File files) throws IOException {
 		
-				
 		Map<String, Integer> frequency = new HashMap<>();
 		BufferedReader reader = new BufferedReader(new FileReader(files));
 		
@@ -75,9 +71,14 @@ public class Results extends JPanel {
 	System.out.println();
 	System.out.printf("the most frequently used word is '%s', %d times", 
 			theWord, mostFrequentlyUsed);
+	
+	
 		
 }
-}
+
+
+   }
+
 
 
 

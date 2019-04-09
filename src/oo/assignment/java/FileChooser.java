@@ -41,7 +41,7 @@ import java.util.Random;
 
 public class FileChooser extends JPanel {
 	
-static void FileChooser(JButton open) throws IOException{
+	public static void FileChooser(JButton open) throws IOException{
 		
 		File file = null;
 		Results result = null;
