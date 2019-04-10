@@ -41,29 +41,72 @@ import java.util.Random;
 
 public class FileChooser extends JPanel {
 	
-	public static void FileChooser(JButton open) throws IOException{
+	private File files;
+	private Results result;
+	private JFileChooser FC;
+	private FileNameExtensionFilter filter;
+	int x;
+	boolean check;
+	
+	public FileChooser(File files, Results result, FileNameExtensionFilter filter) 
+	{
 		
-		File file = null;
-		Results result = null;
-			
+		this.files = files;
+		this.result = result;
+		this.filter = filter;
+	
+	}
+	
+	public static void FilePick(JButton open, File files, boolean check, Results result) throws IOException {
+
 		JFileChooser FC = new JFileChooser();
-		
-		FC.setMultiSelectionEnabled(true);	//Enables selection of more than one file
-		
+
+		FC.setMultiSelectionEnabled(true); // Enables selection of more than one file
+
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-		FC.setFileFilter(filter); 					//Filter to make sure only text files can be selected
+		FC.setFileFilter(filter); // Filter to make sure only text files can be selected
 
 		FC.setDialogTitle("Choose File");
-		
-		int x = FC.showOpenDialog(null);	
 
-		
-		if(x == JFileChooser.APPROVE_OPTION)
-		{
-			File files = FC.getSelectedFile();
-			result = new Results(files);
+		int x = FC.showOpenDialog(null);
+
+		if (x == JFileChooser.APPROVE_OPTION) {
+			files = FC.getSelectedFile();
+			check = true;
 		}
-			
+		
 	}
-			
+
+	public File getFiles() {
+		return files;
+	}
+
+	public void setFiles(File files) {
+		this.files = files;
+	}
+
+	public Results getResult() {
+		return result;
+	}
+
+	public void setResult(Results result) {
+		this.result = result;
+	}
+
+	public JFileChooser getFC() {
+		return FC;
+	}
+
+	public void setFC(JFileChooser fC) {
+		FC = fC;
+	}
+
+	public FileNameExtensionFilter getFilter() {
+		return filter;
+	}
+
+	public void setFilter(FileNameExtensionFilter filter) {
+		this.filter = filter;
+	}
+
 }

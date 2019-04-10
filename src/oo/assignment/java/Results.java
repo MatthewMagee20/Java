@@ -2,6 +2,8 @@ package oo.assignment.java;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -13,22 +15,31 @@ import java.io.BufferedReader;
 import java.io.File;
 
 
-public class Results extends JPanel {
+public class Results extends JPanel 
+{
 	
-	Scanner scanner;
+	private Scanner scanner;
 	private File files;
+	private String[] arr = { "a", "the" }; // stop words
+	private Map<String, Integer> frequency = new HashMap<>();
+	private BufferedReader reader;
 	
-	public Results(File files) throws IOException {
+	public Results(Scanner scanner, File files,String[] arr, Map<String, Integer> frequency, BufferedReader reader)
+	{
+		this.scanner = scanner;
+		this.files = files;	
+		this.arr = arr;
+		this.frequency = frequency;
+		this.reader = reader;
 		
-		Map<String, Integer> frequency = new HashMap<>();
-		BufferedReader reader = new BufferedReader(new FileReader(files));
+	}
 		
+	public void Calculations(File files, BufferedReader reader) throws IOException 
+	{
+		
+		reader = new BufferedReader(new FileReader(files));
 	    scanner = new Scanner(files);
 
-        this.files = files;
-     	
-	
-	
 	String line = reader.readLine();
 	
 	while(line != null) {
@@ -55,7 +66,8 @@ public class Results extends JPanel {
 		line = reader.readLine();
 	}
 	
-	
+	frequency.keySet().removeAll(Arrays.asList(arr)); // removes words from frequency
+
 	System.out.println(frequency);
 	
 	int mostFrequentlyUsed = 0;
@@ -75,6 +87,46 @@ public class Results extends JPanel {
 	
 		
 }
+	
+	public Scanner getScanner() {
+		return scanner;
+	}
+
+	public void setScanner(Scanner scanner) {
+		this.scanner = scanner;
+	}
+
+	public File getFiles() {
+		return files;
+	}
+
+	public void setFiles(File files) {
+		this.files = files;
+	}
+
+	public String[] getArr() {
+		return arr;
+	}
+
+	public void setArr(String[] arr) {
+		this.arr = arr;
+	}
+
+	public Map<String, Integer> getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Map<String, Integer> frequency) {
+		this.frequency = frequency;
+	}
+
+	public BufferedReader getReader() {
+		return reader;
+	}
+
+	public void setReader(BufferedReader reader) {
+		this.reader = reader;
+	}
 
 
    }

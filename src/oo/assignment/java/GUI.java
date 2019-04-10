@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
+import java.util.ArrayList;
+import java. util. Collection;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -19,10 +21,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import oo.assignment.*;
 
@@ -30,25 +36,25 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 {
 
 	  //Attributes
-	  private JButton ChooseFile;
-	  private JButton Results;
-	  private JButton open;
-	  private JTextArea textarea;
-	  private JLabel label1;
-	  boolean gencheck;
-	  Results result;
+	  private 	JButton ChooseFile;
+	  private 	JButton Results;
+	  private 	JButton open;
+	  private 	JTextArea textarea;
+	  private	JLabel label1;
+	  boolean 	check;
+	  private 	int x;
+	  private 	Results result;
+	  private 	File files;
 	  
-	  GUI(JButton open){
-		  this.open = open;
+	  public GUI(JTextArea textarea, Results result, File files,JButton open) 
+	  {
+		  
+		this.textarea = textarea;
+		this.result = result;
+		this.files = files;
+		this.open = open;
+	  
 	  }
-	  
-	  public void setTextArea(JTextArea textarea){
-		  this.textarea = textarea;
-		}
-
-		public JTextArea getTextArea(){
-		  return this.textarea;
-		}
 
 	  //create a section of screen (panel) that will hold some GUI components 
 	  JPanel PanelN = new JPanel();
@@ -108,22 +114,25 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 		if(event.getSource() == open || event.getSource() == ChooseFile)
 		{
 			JOptionPane.showMessageDialog(this, "You will now select files");
-			gencheck = true;
+			check = true;
 			try {
-				FileChooser.FileChooser(open);
+				FileChooser.FilePick(open, files, check, result);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		else if(event.getSource() == Results && gencheck == true) {
+
 			
-			public add(String string) {
-			    textarea.append(string);
-			}
-						
-			}
 		
+			
+			else if(event.getSource() == Results && check == true) {
+				
+				
+				
+			textarea.setText(result.getFrequency().values().toString()); //attempt to get print to tx area
+
+		}
+			
 		
 		else
 		{			
@@ -135,6 +144,38 @@ public class GUI extends JFrame implements ActionListener,MouseListener
 
 	}
 	
+	public JButton getResults() {
+		return Results;
+	}
+
+	public void setResults(JButton results) {
+		Results = results;
+	}
+
+	public JTextArea getTextarea() {
+		return textarea;
+	}
+
+	public void setTextarea(JTextArea textarea) {
+		this.textarea = textarea;
+	}
+
+	public Results getResult() {
+		return result;
+	}
+
+	public void setResult(Results result) {
+		this.result = result;
+	}
+
+	public File getFiles() {
+		return files;
+	}
+
+	public void setFiles(File files) {
+		this.files = files;
+	}
+
 	public void mouseClicked(MouseEvent e) {
 	
 		 
