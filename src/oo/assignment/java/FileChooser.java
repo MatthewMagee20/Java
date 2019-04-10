@@ -47,17 +47,15 @@ public class FileChooser extends JPanel {
 	private FileNameExtensionFilter filter;
 	int x;
 	boolean check;
-	
-	public FileChooser(File files, Results result, FileNameExtensionFilter filter) 
+		
+	public FileChooser(File files, Results result) 
 	{
 		
 		this.files = files;
-		this.result = result;
-		this.filter = filter;
-	
+		
 	}
 	
-	public static void FilePick(JButton open, File files, boolean check, Results result) throws IOException {
+	public static void FilePick(File files) throws IOException {
 
 		JFileChooser FC = new JFileChooser();
 
@@ -69,10 +67,12 @@ public class FileChooser extends JPanel {
 		FC.setDialogTitle("Choose File");
 
 		int x = FC.showOpenDialog(null);
+		
 
-		if (x == JFileChooser.APPROVE_OPTION) {
+
+		if (x == JFileChooser.APPROVE_OPTION) 
+		{
 			files = FC.getSelectedFile();
-			check = true;
 		}
 		
 	}
@@ -83,30 +83,6 @@ public class FileChooser extends JPanel {
 
 	public void setFiles(File files) {
 		this.files = files;
-	}
-
-	public Results getResult() {
-		return result;
-	}
-
-	public void setResult(Results result) {
-		this.result = result;
-	}
-
-	public JFileChooser getFC() {
-		return FC;
-	}
-
-	public void setFC(JFileChooser fC) {
-		FC = fC;
-	}
-
-	public FileNameExtensionFilter getFilter() {
-		return filter;
-	}
-
-	public void setFilter(FileNameExtensionFilter filter) {
-		this.filter = filter;
 	}
 
 }

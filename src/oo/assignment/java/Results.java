@@ -23,22 +23,23 @@ public class Results extends JPanel
 	private String[] arr = { "a", "the" }; // stop words
 	private Map<String, Integer> frequency = new HashMap<>();
 	private BufferedReader reader;
+	private String[] strs;
 	
-	public Results(Scanner scanner, File files,String[] arr, Map<String, Integer> frequency, BufferedReader reader)
+	public Results(Map<String, Integer> frequency, File files, String[] strs)
 	{
-		this.scanner = scanner;
-		this.files = files;	
-		this.arr = arr;
+	
+		this.files = files;		
 		this.frequency = frequency;
-		this.reader = reader;
-		
+		this.strs = getStrs();
+	
 	}
-		
-	public void Calculations(File files, BufferedReader reader) throws IOException 
-	{
-		
-		reader = new BufferedReader(new FileReader(files));
-	    scanner = new Scanner(files);
+	
+
+public void Calculations(File files) throws IOException 
+{
+	
+	reader = new BufferedReader(new FileReader(getFiles()));
+	scanner = new Scanner(getFiles());
 
 	String line = reader.readLine();
 	
@@ -66,9 +67,12 @@ public class Results extends JPanel
 		line = reader.readLine();
 	}
 	
+   String[] strs = frequency.keySet().toArray(new String[frequency.size()]);
+
 	frequency.keySet().removeAll(Arrays.asList(arr)); // removes words from frequency
 
-	System.out.println(frequency);
+	//frequency.entrySet().toArray();
+	System.out.println(strs);
 	
 	int mostFrequentlyUsed = 0;
 	String theWord = null;
@@ -87,14 +91,7 @@ public class Results extends JPanel
 	
 		
 }
-	
-	public Scanner getScanner() {
-		return scanner;
-	}
 
-	public void setScanner(Scanner scanner) {
-		this.scanner = scanner;
-	}
 
 	public File getFiles() {
 		return files;
@@ -127,6 +124,15 @@ public class Results extends JPanel
 	public void setReader(BufferedReader reader) {
 		this.reader = reader;
 	}
+	
+	public String[] getStrs() {
+		return Arrays.copyOf(strs, strs.length);
+	}
+
+	public void setStrs(String[] strs) {
+		this.strs = Arrays.copyOf(strs, strs.length);
+	}
+
 
 
    }

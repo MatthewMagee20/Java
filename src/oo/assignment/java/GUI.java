@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java. util. Collection;
+import java.util.Collection;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -32,187 +32,147 @@ import java.util.Map;
 import java.util.Scanner;
 import oo.assignment.*;
 
-public class GUI extends JFrame implements ActionListener,MouseListener 
-{
+public class GUI extends JFrame implements ActionListener, MouseListener {
 
-	  //Attributes
-	  private 	JButton ChooseFile;
-	  private 	JButton Results;
-	  private 	JButton open;
-	  private 	JTextArea textarea;
-	  private	JLabel label1;
-	  boolean 	check;
-	  private 	int x;
-	  private 	Results result;
-	  private 	File files;
-	  
-	  public GUI(JTextArea textarea, Results result, File files,JButton open) 
-	  {
-		  
+	// Attributes
+	private JButton ChooseFile;
+	private JButton ResultsButton;
+	private JButton open;
+	private JTextArea textarea;
+	private JLabel label1;
+	boolean check;
+	private int x;
+	private Results Results;
+	private File files;
+
+	public GUI(JTextArea textarea, JButton open) 
+	{
+
 		this.textarea = textarea;
-		this.result = result;
-		this.files = files;
 		this.open = open;
-	  
-	  }
 
-	  //create a section of screen (panel) that will hold some GUI components 
-	  JPanel PanelN = new JPanel();
-	  JPanel PanelC= new JPanel();
-	  JPanel PanelS = new JPanel();
-	    		  	 
-	  //Constructor
-	  public GUI(String title)
-	  {
-		  //set the title
-		  super(title);
-		
-		  //sets the screen layout  - in this case, border layout
-		  setLayout(new BorderLayout());
-		   		   
-		   //add the panel to the screen ,set background colour and panel dimensions
-		   add(PanelN, BorderLayout.NORTH);
-		   PanelN.setBackground(Color.gray);
-		   PanelN.setPreferredSize(new Dimension(580, 50));
-		   add(PanelC, BorderLayout.CENTER);
-		   PanelC.setBackground(Color.white);
-		   add(PanelS, BorderLayout.SOUTH);
-		   PanelS.setBackground(Color.gray);
-		   
-		   label1  = new JLabel("Please choose an Option");
-		   PanelN.add(label1); 
-		   
-		   
-		   ChooseFile = new JButton("Choose Files");
-		   ChooseFile.setPreferredSize(new Dimension(140, 30));
-		   ChooseFile.addActionListener(this);
-		   
-		   Results = new JButton("Display Results");
-		   Results.setPreferredSize(new Dimension(140, 30));
-		   Results.addActionListener(this);
-		   
-		   textarea = new JTextArea();
-		   textarea.setEditable(false);
-		   this.setPreferredSize(new Dimension(200, 200));
-	       this.add(textarea, BorderLayout.CENTER);
-		 
-		   PanelN.add(ChooseFile);
-		   PanelN.add(Results);
-		   
-			// set the location of the screen  
-		   setLocation(500,100);
+	}
 
-		   // Define the size of the frame  
-		   setSize(600,500);
-		   
-		   // make the screen appear - without this, it doesn't!  
-		   setVisible(true);
-		   	   
-	 }
-			  
+	// create a section of screen (panel) that will hold some GUI components
+	JPanel PanelN = new JPanel();
+	JPanel PanelC = new JPanel();
+	JPanel PanelS = new JPanel();
+
+	// Constructor
+	public GUI(String title) {
+		// set the title
+		super(title);
+
+		// sets the screen layout - in this case, border layout
+		setLayout(new BorderLayout());
+
+		// add the panel to the screen ,set background colour and panel dimensions
+		add(PanelN, BorderLayout.NORTH);
+		PanelN.setBackground(Color.gray);
+		PanelN.setPreferredSize(new Dimension(580, 50));
+		add(PanelC, BorderLayout.CENTER);
+		PanelC.setBackground(Color.white);
+		add(PanelS, BorderLayout.SOUTH);
+		PanelS.setBackground(Color.gray);
+
+		label1 = new JLabel("Please choose an Option");
+		PanelN.add(label1);
+
+		ChooseFile = new JButton("Choose Files");
+		ChooseFile.setPreferredSize(new Dimension(140, 30));
+		ChooseFile.addActionListener(this);
+
+		ResultsButton = new JButton("Display Results");
+		ResultsButton.setPreferredSize(new Dimension(140, 30));
+		ResultsButton.addActionListener(this);
+
+		textarea = new JTextArea();
+		textarea.setEditable(false);
+		this.setPreferredSize(new Dimension(200, 200));
+		this.add(textarea, BorderLayout.CENTER);
+
+		PanelN.add(ChooseFile);
+		PanelN.add(ResultsButton);
+
+		// set the location of the screen
+		setLocation(500, 100);
+
+		// Define the size of the frame
+		setSize(600, 500);
+
+		// make the screen appear - without this, it doesn't!
+		setVisible(true);
+
+	}
+
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == open || event.getSource() == ChooseFile)
-		{
+		if (event.getSource() == open || event.getSource() == ChooseFile) {
 			JOptionPane.showMessageDialog(this, "You will now select files");
-			check = true;
+			
 			try {
-				FileChooser.FilePick(open, files, check, result);
+				FileChooser.FilePick(null);
+				check = true;
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			
+			
+		}
+
+		else if (event.getSource() == ResultsButton && check == true) {
+			
+			
+			//result.getFrequency();
+			//textarea.setText(result.getFrequency().values().toString()); // attempt to get print to tx area
+			
+			String [] strs = Results.getStrs();
+			for(String str : strs ) {
+				textarea.append(str.toString());
 			}
 		}
 
-			
-		
-			
-			else if(event.getSource() == Results && check == true) {
-				
-				
-				
-			textarea.setText(result.getFrequency().values().toString()); //attempt to get print to tx area
-
-		}
-			
-		
-		else
-		{			
+		else {
 			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
 
 		}
-		
-			
 
-	}
-	
-	public JButton getResults() {
-		return Results;
-	}
-
-	public void setResults(JButton results) {
-		Results = results;
-	}
-
-	public JTextArea getTextarea() {
-		return textarea;
-	}
-
-	public void setTextarea(JTextArea textarea) {
-		this.textarea = textarea;
-	}
-
-	public Results getResult() {
-		return result;
-	}
-
-	public void setResult(Results result) {
-		this.result = result;
-	}
-
-	public File getFiles() {
-		return files;
-	}
-
-	public void setFiles(File files) {
-		this.files = files;
 	}
 
 	public void mouseClicked(MouseEvent e) {
-	
-		 
-		if(SwingUtilities.isLeftMouseButton(e)) {
-			//JOptionPane.showMessageDialog(this, "Left Click");
-			
-		
-		}
-		else if(SwingUtilities.isRightMouseButton(e)) {
-			//JOptionPane.showMessageDialog(this, "Right Click");
-			
+
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			// JOptionPane.showMessageDialog(this, "Left Click");
+
+		} else if (SwingUtilities.isRightMouseButton(e)) {
+			// JOptionPane.showMessageDialog(this, "Right Click");
+
 		}
 	}
 
 	@Override
-	 public void mousePressed(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-   	 public void mouseReleased(MouseEvent e) {
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	 public void mouseEntered(MouseEvent e) {
-		
-		//JOptionPane.showMessageDialog(this, "Mouse Entered the left panel");
-		
+	public void mouseEntered(MouseEvent e) {
+
+		// JOptionPane.showMessageDialog(this, "Mouse Entered the left panel");
+
 	}
 
 	@Override
-	 public void mouseExited(MouseEvent e) {
-		//JOptionPane.showMessageDialog(this, "Mouse left the left panel");
-		
-		
+	public void mouseExited(MouseEvent e) {
+		// JOptionPane.showMessageDialog(this, "Mouse left the left panel");
+
 	}
 }
