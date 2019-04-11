@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -15,11 +16,11 @@ import java.io.BufferedReader;
 import java.io.File;
 
 
-public class Results extends JPanel 
+public class Results extends JFrame 
 {
 	private String filename;
 	private Scanner scanner;
-	private String strs;
+	private String [] strs;
 	private File[] files;
 	private String[] arr = { "a", "the" }; // stop words
 	private Map<String, Integer> frequency = new HashMap<>();
@@ -32,6 +33,11 @@ public class Results extends JPanel
 	
 	}
 	
+	Results(String [] strs)
+	{
+		this.strs = strs;
+	}
+	
 
 
 void connectToFile() 
@@ -41,7 +47,7 @@ void connectToFile()
 }
 
 
-Map<String, Integer> ReadFile()
+String [] ReadFile()
 {
 	
 	String line;
@@ -77,9 +83,9 @@ Map<String, Integer> ReadFile()
 
 	frequency.keySet().removeAll(Arrays.asList(arr)); // removes words from frequency
 	
-	   String[] strs = frequency.keySet().toArray(new String[frequency.size()]);
+	String[] strs = frequency.keySet().toArray(new String[frequency.size()]);
 
-	//frequency.entrySet().toArray();
+	frequency.entrySet().toArray();
 	System.out.println(frequency);
 	
 	int mostFrequentlyUsed = 0;
@@ -99,16 +105,17 @@ Map<String, Integer> ReadFile()
 	{
 		System.out.println("run time error " + e.getMessage());
 	}
-	return frequency;		
+	
+	return strs;
 }
 
-public String getStrs() {
+public String[] getStrs() {
 	return strs;
 }
 
 
 
-public void setStrs(String strs) {
+public void setStrs(String[] strs) {
 	this.strs = strs;
 }
 

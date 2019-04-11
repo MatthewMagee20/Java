@@ -145,9 +145,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			textarea.setText(result.getFrequency().values().toString()); 
 			// attempt to get print to tx area
 			
-			//String [] strs = Results.getStrs();
-			//for(String str : strs ) {
+			
+			
 		
+			
 		
 		}
 
