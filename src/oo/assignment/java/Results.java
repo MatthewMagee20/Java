@@ -14,43 +14,66 @@ import javax.swing.JTextArea;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 
-public class Results extends JFrame 
+public class Results
 {
+	//private int totalRow;
+	//private int totalColumn;
+	//private String[][] wordArray = new String[totalRow][totalColumn];
 	private String filename;
 	private Scanner scanner;
 	private String [] strs;
-	private File[] files;
+	private File files;
 	private String[] arr = { "a", "the" }; // stop words
 	private Map<String, Integer> frequency = new HashMap<>();
 	private BufferedReader reader;
+	private String line;
 		
-	Results(File[] file)
+
+	// Constructor
+	Results(String filename)
 	{
-	
-		this.files = file;
-	
+		
+		this.filename = filename;
+		
 	}
 	
-	Results(String [] strs)
+	void connectToFile() 
 	{
-		this.strs = strs;
+		files = new File(filename);
 	}
 	
-
-
-void connectToFile() 
+	
+String[] ReadFile()
 {
-	
-	File file = new File(filename);
+	String [] values = new String[999];
+	try {
+		int i = 0;
+		Scanner scanner = new Scanner(files);
+		 while (scanner.hasNextLine())
+		    {
+		      
+			 values[i] = scanner.nextLine();
+		      i++;
+		      
+		    }
+	}
+	catch (FileNotFoundException e)
+	{
+		System.out.println("run time error " + e.getMessage());
+	}
+ finally
+ {
+     //return values;
+ }
+	return values;
 }
 
 
-String [] ReadFile()
+String[] Calc()
 {
-	
-	String line;
 	try {
 		line = reader.readLine();
 	
@@ -107,7 +130,14 @@ String [] ReadFile()
 	}
 	
 	return strs;
+	
 }
+
+void closeReadFile()
+{
+	 scanner.close();
+}
+
 
 public String[] getStrs() {
 	return strs;
@@ -119,15 +149,6 @@ public void setStrs(String[] strs) {
 	this.strs = strs;
 }
 
-
-
-public File[] getFiles() {
-	return files;
-}
-
-public void setFiles(File[] files) {
-	this.files = files;
-}
 
 public Map<String, Integer> getFrequency() {
 	return frequency;

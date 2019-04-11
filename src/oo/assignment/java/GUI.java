@@ -23,6 +23,7 @@ import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,21 +43,18 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private JLabel label1;
 	boolean check;
 	private int x;
-	private Results result;
 	private File[] files;
-
-	public GUI(JTextArea textarea, JButton open) 
+	private Scanner scan;
+	private String filename;
+	private Results result;
+	
+	GUI(Results result,String filename)
 	{
-
-		this.textarea = textarea;
-		this.open = open;
-
+this.result = result;
+this.filename = filename;
 	}
+	
 
-	// create a section of screen (panel) that will hold some GUI components
-	JPanel PanelN = new JPanel();
-	JPanel PanelC = new JPanel();
-	JPanel PanelS = new JPanel();
 
 	// Constructor
 	public GUI(String title) {
@@ -66,6 +64,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		// sets the screen layout - in this case, border layout
 		setLayout(new BorderLayout());
 
+			
+		// create a section of screen (panel) that will hold some GUI components
+		JPanel PanelN = new JPanel();
+		JPanel PanelC = new JPanel();
+		JPanel PanelS = new JPanel();
+		
 		// add the panel to the screen ,set background colour and panel dimensions
 		add(PanelN, BorderLayout.NORTH);
 		PanelN.setBackground(Color.gray);
@@ -126,10 +130,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			if (x == JFileChooser.APPROVE_OPTION)
 			{
 
-				System.out.println("in file chooser");
-				files = FCGUI.getSelectedFiles();
-				result = new Results(files);
+				System.out.println("File Chosen");
+				//files = FCGUI.getSelectedFiles();
 				
+				files = FCGUI.getSelectedFiles();
+				
+				String filename = FCGUI.getSelectedFile().getAbsolutePath();
+
+				result = new Results(filename);
+
 			}
 			
 			check = true;
@@ -142,13 +151,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			
 			
 			//result.getFrequency();
-			textarea.setText(result.getFrequency().values().toString()); 
+			//textarea.setText(result.getFrequency().values().toString()); 
 			// attempt to get print to tx area
 			
 			
-			
-		
-			
+				//FileManager fm = new FileManager("names.txt");
+
+				result.connectToFile();
+				result.ReadFile();
+				System.out.println(result.Calc());
+				
+				
 		
 		}
 
