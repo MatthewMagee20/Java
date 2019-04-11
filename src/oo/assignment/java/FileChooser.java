@@ -1,4 +1,4 @@
-package oo.assignment.java;
+/*package oo.assignment.java;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -41,48 +41,57 @@ import java.util.Random;
 
 public class FileChooser extends JPanel {
 	
-	private File files;
-	private Results result;
+	private File [] files;
 	private JFileChooser FC;
 	private FileNameExtensionFilter filter;
 	int x;
 	boolean check;
+	private Results result;
 		
-	public FileChooser(File files, Results result) 
+	FileChooser(File[] files,Results result) 
 	{
 		
+		this.result = result;
 		this.files = files;
 		
 	}
 	
-	public static void FilePick(File files) throws IOException {
+	public void FilePick() throws IOException 
+	{
 
-		JFileChooser FC = new JFileChooser();
+		JFileChooser FCgui = new JFileChooser();
 
-		FC.setMultiSelectionEnabled(true); // Enables selection of more than one file
+		FCgui.setMultiSelectionEnabled(true); // Enables selection of more than one file
 
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-		FC.setFileFilter(filter); // Filter to make sure only text files can be selected
+		FCgui.setFileFilter(filter); // Filter to make sure only text files can be selected
 
-		FC.setDialogTitle("Choose File");
+		FCgui.setDialogTitle("Choose File");
 
-		int x = FC.showOpenDialog(null);
+		int x = FCgui.showOpenDialog(null);
 		
 
 
-		if (x == JFileChooser.APPROVE_OPTION) 
+		if (x == JFileChooser.APPROVE_OPTION)
 		{
-			files = FC.getSelectedFile();
+			files = FCgui.getSelectedFiles();
+			result = new Results(files);
+		
 		}
 		
+
 	}
 
-	public File getFiles() {
+	public File[] getFiles() {
 		return files;
 	}
 
-	public void setFiles(File files) {
+	public void setFiles(File[] files) {
 		this.files = files;
 	}
 
+	public void setSelectedFiles(File[] files) {
+		this.setSelectedFiles(files);
 }
+}
+*/

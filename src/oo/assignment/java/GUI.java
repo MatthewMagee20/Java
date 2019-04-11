@@ -35,15 +35,15 @@ import oo.assignment.*;
 public class GUI extends JFrame implements ActionListener, MouseListener {
 
 	// Attributes
-	private JButton ChooseFile;
+	private JButton ChooseFileButton;
 	private JButton ResultsButton;
 	private JButton open;
 	private JTextArea textarea;
 	private JLabel label1;
 	boolean check;
 	private int x;
-	private Results Results;
-	private File files;
+	private Results result;
+	private File[] files;
 
 	public GUI(JTextArea textarea, JButton open) 
 	{
@@ -78,9 +78,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		label1 = new JLabel("Please choose an Option");
 		PanelN.add(label1);
 
-		ChooseFile = new JButton("Choose Files");
-		ChooseFile.setPreferredSize(new Dimension(140, 30));
-		ChooseFile.addActionListener(this);
+		ChooseFileButton = new JButton("Choose Files");
+		ChooseFileButton.setPreferredSize(new Dimension(140, 30));
+		ChooseFileButton.addActionListener(this);
 
 		ResultsButton = new JButton("Display Results");
 		ResultsButton.setPreferredSize(new Dimension(140, 30));
@@ -91,7 +91,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		this.setPreferredSize(new Dimension(200, 200));
 		this.add(textarea, BorderLayout.CENTER);
 
-		PanelN.add(ChooseFile);
+		PanelN.add(ChooseFileButton);
 		PanelN.add(ResultsButton);
 
 		// set the location of the screen
@@ -105,39 +105,66 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 
 	}
 
-	public void actionPerformed(ActionEvent event) {
-		if (event.getSource() == open || event.getSource() == ChooseFile) {
+	public void actionPerformed(ActionEvent event) 
+	{
+		
+		if (event.getSource() == open || event.getSource() == ChooseFileButton) 
+		{
 			JOptionPane.showMessageDialog(this, "You will now select files");
 			
-			try {
-				FileChooser.FilePick(null);
-				check = true;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			JFileChooser FCGUI = new JFileChooser();
+
+			FCGUI.setMultiSelectionEnabled(true); // Enables selection of more than one file
+
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+			FCGUI.setFileFilter(filter); // Filter to make sure only text files can be selected
+
+			int x = FCGUI.showOpenDialog(null);
+
+			FCGUI.setDialogTitle("Choose File");
+			
+			if (x == JFileChooser.APPROVE_OPTION)
+			{
+
+				System.out.println("in file chooser");
+				files = FCGUI.getSelectedFiles();
+				result = new Results(files);
+				
 			}
 			
-			
-			
-		}
+			check = true;
+	    }
+     		
+		
 
-		else if (event.getSource() == ResultsButton && check == true) {
+		else if (event.getSource() == ResultsButton && check == true) 
+		{
 			
 			
 			//result.getFrequency();
-			//textarea.setText(result.getFrequency().values().toString()); // attempt to get print to tx area
+			textarea.setText(result.getFrequency().values().toString()); 
+			// attempt to get print to tx area
 			
-			String [] strs = Results.getStrs();
-			for(String str : strs ) {
-				textarea.append(str.toString());
-			}
+			//String [] strs = Results.getStrs();
+			//for(String str : strs ) {
+		
+		
 		}
 
-		else {
+		else 
+		{
 			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
 
 		}
 
+	}
+
+	public File[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(File[] files) {
+		this.files = files;
 	}
 
 	public void mouseClicked(MouseEvent e) {
