@@ -3,14 +3,12 @@ package oo.assignment.java;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.HeadlessException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,20 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import oo.assignment.*;
+
 
 public class GUI extends JFrame implements ActionListener, MouseListener {
 
@@ -42,19 +32,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private JTextArea textarea;
 	private JLabel label1;
 	boolean check;
-	private int x;
-	private File[] files;
-	private Scanner scan;
-	private String filename;
-	private Results result;
-	
-	GUI(Results result,String filename)
-	{
-this.result = result;
-this.filename = filename;
-	}
-	
+	int x;
+	File files;
+	String filename;
+	Results result;
+	JFileChooser FCGUI;
 
+	
+	GUI(Results result) {
+		this.result = result;
+	}
 
 	// Constructor
 	public GUI(String title) {
@@ -62,14 +49,12 @@ this.filename = filename;
 		super(title);
 
 		// sets the screen layout - in this case, border layout
-		setLayout(new BorderLayout());
 
-			
 		// create a section of screen (panel) that will hold some GUI components
 		JPanel PanelN = new JPanel();
 		JPanel PanelC = new JPanel();
 		JPanel PanelS = new JPanel();
-		
+
 		// add the panel to the screen ,set background colour and panel dimensions
 		add(PanelN, BorderLayout.NORTH);
 		PanelN.setBackground(Color.gray);
@@ -109,7 +94,7 @@ this.filename = filename;
 
 	}
 
-	public void actionPerformed(ActionEvent event) 
+	public void actionPerformed(ActionEvent event)
 	{
 		
 		if (event.getSource() == open || event.getSource() == ChooseFileButton) 
@@ -130,16 +115,16 @@ this.filename = filename;
 			if (x == JFileChooser.APPROVE_OPTION)
 			{
 
-				System.out.println("File Chosen");
-				//files = FCGUI.getSelectedFiles();
+				System.out.println("File Chosen" );
 				
-				files = FCGUI.getSelectedFiles();
 				
-				String filename = FCGUI.getSelectedFile().getAbsolutePath();
-
-				result = new Results(filename);
-
+				
+				File file = new File(FCGUI.getSelectedFile().getAbsolutePath());
+				
+				filename = file;
 			}
+			
+
 			
 			check = true;
 	    }
@@ -147,38 +132,52 @@ this.filename = filename;
 		
 
 		else if (event.getSource() == ResultsButton && check == true) 
-		{
-			
-			
+		{			
 			//result.getFrequency();
 			//textarea.setText(result.getFrequency().values().toString()); 
 			// attempt to get print to tx area
 			
 			
 				//FileManager fm = new FileManager("names.txt");
+			Results result = new Results(filename);
 
-				result.connectToFile();
+			result.connectToFile();
+			try {
 				result.ReadFile();
-				System.out.println(result.Calc());
-				
-				
-		
-		}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			ArrayList<String> arr = result.getWord();
+			for(String ar : arr)
+			{
 
-		else 
-		{
-			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
-
-		}
+			}
+			
 
 	}
 
-	public File[] getFiles() {
+	else
+	{
+		JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
+
+	}
+
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public File getFiles() {
 		return files;
 	}
 
-	public void setFiles(File[] files) {
-		this.files = files;
+	public void setFiles(File file) {
+		this.files = file;
 	}
 
 	public void mouseClicked(MouseEvent e) {

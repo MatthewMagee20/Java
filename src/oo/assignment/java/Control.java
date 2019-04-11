@@ -2,9 +2,11 @@ package oo.assignment.java;
 
 public class Control {
 
+	private static GUI GUI;
+
 	public static void main(String[] args) {
 		
-		GUI GUI = new GUI("GUI");
+		GUI = new GUI("GUI");
 	}
 
 }
