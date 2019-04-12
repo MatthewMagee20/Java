@@ -10,35 +10,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Results extends JFrame implements ActionListener, MouseListener
 {
-	
-	private JButton calcButton;
-	private JTextArea resultsArea;
-	private Scanner scanner;
-	String filename;
-	GUI obj;
-	//private String[] arr = { "a", "the" }; // stop words
-	ArrayList<String> word = new ArrayList<String>();
-	ArrayList<Integer> count = new ArrayList<Integer>();
-		
-	
-	
-	  JPanel PanelN = new JPanel();
-	  JPanel PanelS = new JPanel();
-	  JPanel PanelC = new JPanel();
-	  
-	
-	
-	public Results(String filename) {
-		// set the title
-		super(filename);
-	
-	
-		// sets the screen layout - in this case, border layout
+	private JButton freqWords;
+	private JButton remStopWords;
+	private JTextArea display;
+	private JLabel label;
+	private Scanner fileInput;
+	private File file;
 
-		// create a section of screen (panel) that will hold some GUI components
+	
+	public Results(String title) {
+		// set the title
+		super(title);
+			
+		file = getFile();
+		
 		JPanel PanelN = new JPanel();
 		JPanel PanelC = new JPanel();
 		JPanel PanelS = new JPanel();
@@ -51,127 +41,135 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		PanelC.setBackground(Color.white);
 		add(PanelS, BorderLayout.SOUTH);
 		PanelS.setBackground(Color.gray);
-	
-		calcButton = new JButton("Calculate");
-		calcButton.setPreferredSize(new Dimension(140, 30));
-		calcButton.addActionListener(this);
 		
-		resultsArea = new JTextArea();
-		resultsArea.setEditable(false);
+		label = new JLabel("Please choose an Option");
+		PanelN.add(label);
+		
+		freqWords = new JButton("Most Frequent words");
+		freqWords.setPreferredSize(new Dimension(140, 30));
+		freqWords.addActionListener(this);
+
+		remStopWords = new JButton("Remove Stop Words");
+		remStopWords.setPreferredSize(new Dimension(140, 30));
+		remStopWords.addActionListener(this);
+
+		display = new JTextArea();
+		display.setEditable(false);
 		this.setPreferredSize(new Dimension(200, 200));
-		this.add(resultsArea, BorderLayout.CENTER);
+		this.add(display, BorderLayout.CENTER);
+
+		PanelN.add(remStopWords);
+		PanelN.add(freqWords);
 		
-		PanelS.add(calcButton);
-	
 		// set the location of the screen
-				setLocation(500, 100);
+		setLocation(500, 100);
 
-				// Define the size of the frame
-				setSize(600, 500);
+		// Define the size of the frame
+		setSize(600, 500);
 
-				// make the screen appear - without this, it doesn't!
-				setVisible(true);
-
+		// make the screen appear - without this, it doesn't!
+		setVisible(true);
+		
 	}
 	
 
 
-	public void actionPerformed(ActionEvent event, String filename) {
-		if (event.getSource() == calcButton) {
+	public void actionPerformed(ActionEvent event) {
+		if(event.getSource() == freqWords)
+		{
+			
+			
+				try {
+					fileInput = new Scanner(file);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 				
-			scanner = new Scanner(filename); 
-			while(scanner.hasNext())
+				
+			
+			ArrayList<String> words = new ArrayList<String>();
+			ArrayList<Integer> count = new ArrayList<Integer>();
+			
+			while(fileInput.hasNext())
 			{
-				String nextword = scanner.next();
+				String nextWord = fileInput.next();
 				
-				//word in arraylist?
-				if(word.contains(nextword))
+				if(words.contains(nextWord))
 				{
-					int i = word.indexOf(nextword);
-					count.set(i, count.get(i)+1);
+					int index = words.indexOf(nextWord);
+					count.set(index, count.get(index)+ 1);
+					
 				}
 				else {
-					word.add(nextword);
+					words.add(nextWord);
 					count.add(1);
+					
 				}
-				System.out.println(word);
+			}
+			
+			fileInput.close();
+			
+			for(int i = 0; i < words.size(); i ++)
+			{
+				
+				System.out.println("____________________________________");
+				System.out.println("     "+words.get(i)+" = " + count.get(i)+ " time/s");
+		
 			}
 		}
 		
-		//System.out.println(filename);
+		if(event.getSource() == remStopWords)
+		{
+			try {
+				fileInput = new Scanner(file);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			
+		}
+	}
+		
+	public File getFile() {
+		return file;
 	}
 
-
-public ArrayList<String> getWord() {
-	return word;
-}
-
-public void setWord(ArrayList<String> word) {
-	this.word = word;
-}
-
-
-
-
-@Override
-public void mouseClicked(MouseEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-
-@Override
-public void mouseEntered(MouseEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-
-@Override
-public void mouseExited(MouseEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-
-@Override
-public void mousePressed(MouseEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-
-@Override
-public void mouseReleased(MouseEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
-
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
-	
-}
-
-
-
-
-
-		
-		
-
-		
+	public void setFile(File file) {
+		this.file = file;
 	}
 	
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
 
 
 		

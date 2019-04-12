@@ -41,19 +41,15 @@ import java.util.Map;
 import java.util.Random;
 
 public class FileChooser extends JPanel {
-	
+
 	private File files;
 	private JFileChooser FC;
 	private FileNameExtensionFilter filter;
-	int x;
-	boolean check;
-	String line;
-		
-	String[] data;
-	
-	FileChooser() throws IOException
-	{
-	
+	private int x;
+	private String filename;
+
+	FileChooser() throws FileNotFoundException {
+
 		FC = new JFileChooser();
 
 		FC.setMultiSelectionEnabled(true); // Enables selection of more than one file
@@ -64,32 +60,23 @@ public class FileChooser extends JPanel {
 		FC.setDialogTitle("Choose File");
 
 		int x = FC.showOpenDialog(null);
-		
 
-
-		if (x == JFileChooser.APPROVE_OPTION)
-		{
+		if (x == JFileChooser.APPROVE_OPTION) {
 			files = FC.getSelectedFile();
-			System.out.println("File Chosen" );
 			
-			BufferedReader abc = new BufferedReader(new FileReader(files));
-			List<String> lines = new ArrayList<String>();
+			filename = files.getAbsolutePath();
 			
-			try {
-				while((line = abc.readLine()) != null) {
-				    lines.add(line);
-				    System.out.println(data);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			abc.close();
-
-			// If you want to convert to a String[]
-			String[] data = lines.toArray(new String[]{});
+			System.out.println("File chosen = "+filename+"\n");
+			
+			
+			
+			Results result = new Results("Results Menu");
+			
+			result.setFile(files);
+			
 		}
 		
-}
+		
 
+	}
 }
