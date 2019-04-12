@@ -2,9 +2,7 @@ package oo.assignment.java;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import javax.swing.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,33 +10,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-
 
 public class Results extends JFrame implements ActionListener, MouseListener
 {
 	
 	private JButton calcButton;
 	private JTextArea resultsArea;
-	private String filename;
 	private Scanner scanner;
-	private File files;
-		//private String[] arr = { "a", "the" }; // stop words
+	String filename;
+	GUI obj;
+	//private String[] arr = { "a", "the" }; // stop words
 	ArrayList<String> word = new ArrayList<String>();
 	ArrayList<Integer> count = new ArrayList<Integer>();
 		
+	
 	
 	  JPanel PanelN = new JPanel();
 	  JPanel PanelS = new JPanel();
 	  JPanel PanelC = new JPanel();
 	  
 	
-	public Results(String title) {
+	
+	public Results(String filename) {
 		// set the title
-		super(title);
-
+		super(filename);
+	
+	
 		// sets the screen layout - in this case, border layout
 
 		// create a section of screen (panel) that will hold some GUI components
@@ -76,93 +73,34 @@ public class Results extends JFrame implements ActionListener, MouseListener
 				setVisible(true);
 
 	}
-ArrayList<String> ReadFile() throws FileNotFoundException
-{
 	
-	scanner = new Scanner(filename); 
-	while(scanner.hasNext())
-	{
-		String nextword = scanner.next();
-		
-		//word in arraylist?
-		if(word.contains(nextword))
-		{
-			int i = word.indexOf(nextword);
-			count.set(i, count.get(i)+1);
-		}
-		else {
-			word.add(nextword);
-			count.add(1);
-		}
-		System.out.println(word);
-	}
-	
-	
-	return word;
-	
-}
-	
-		/*String line = reader.readLine();
-		
-		while(line != null) {
-			
-			if(!line.trim().equals("")) {
-				String [] words = line.split(" ");
+
+
+	public void actionPerformed(ActionEvent event, String filename) {
+		if (event.getSource() == calcButton) {
 				
-				for(String word : words) {
-					if(word == null || word.trim().equals("")) {
-						continue;
-					}
-					String processed = word.toLowerCase();
-					processed = processed.replace(",", "");
-					
-					if(frequency.containsKey(processed)) {
-						frequency.put(processed, 
-								frequency.get(processed) + 1);
-					} else {
-						frequency.put(processed, 1);
-					}
-				}
-			}
-			
-			line = reader.readLine();
-		}
-		
-
-		//frequency.keySet().removeAll(Arrays.asList(arr)); // removes words from frequency
-		
-		//String[] strs = frequency.keySet().toArray(new String[frequency.size()]);
-
-		frequency.entrySet().toArray();
-		System.out.println(frequency);
-		
-		int mostFrequentlyUsed = 0;
-		String theWord = null;
-		
-		for(String word : frequency.keySet()) 
-		{
-			Integer theVal = frequency.get(word);
-			if(theVal > mostFrequentlyUsed) 
+			scanner = new Scanner(filename); 
+			while(scanner.hasNext())
 			{
-				mostFrequentlyUsed = theVal;
-				theWord = word;		
+				String nextword = scanner.next();
+				
+				//word in arraylist?
+				if(word.contains(nextword))
+				{
+					int i = word.indexOf(nextword);
+					count.set(i, count.get(i)+1);
+				}
+				else {
+					word.add(nextword);
+					count.add(1);
+				}
+				System.out.println(word);
 			}
 		}
-		System.out.println();
-		System.out.printf("the most frequently used word is '%s', %d times", 
-				theWord, mostFrequentlyUsed);
 		
-
-	{
-		System.out.println("run time error " );
+		//System.out.println(filename);
 	}
-		
-		return strs;
-		*/
 
- 
-
- 
 
 public ArrayList<String> getWord() {
 	return word;
@@ -217,15 +155,30 @@ public void mouseReleased(MouseEvent arg0) {
 	
 }
 
-
-
-
 @Override
-public void actionPerformed(ActionEvent arg0) {
+public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	
 }
-}
+
+
+
+
+
+		
+		
+
+		
+	}
+	
+
+
+
+		
+	
+	
+
+
 
 
 

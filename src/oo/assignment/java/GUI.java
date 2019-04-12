@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -35,16 +36,26 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private JButton open;
 	private JTextArea textarea;
 	private JLabel label1;
-	boolean check;
-	int x;
-	private File files;
-	String filename;
-	private JFileChooser FCGUI;
-
+	private boolean check;
+	private Scanner scanner;
+	private int x;
+	private File file;
+	private String filename;
+	private JFileChooser newFileChooser;
+	private FileNameExtensionFilter filter;
+	Results result;
 	
-	GUI(File files) 
-	{
-		this.files = files;
+	
+	ArrayList<String> word = new ArrayList<String>();
+	ArrayList<Integer> count = new ArrayList<Integer>();
+	
+	GUI(File files, JFileChooser newFileChooser,FileNameExtensionFilter filter, Results result, int x) 
+	{		
+		this.file 	= files;
+		this.newFileChooser 	= newFileChooser;
+		this.filter = filter;
+		this.result	= result;
+		this.x 		= x;
 	}
 
 	// Constructor
@@ -67,7 +78,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		PanelC.setBackground(Color.white);
 		add(PanelS, BorderLayout.SOUTH);
 		PanelS.setBackground(Color.gray);
-
+		
 		label1 = new JLabel("Please choose an Option");
 		PanelN.add(label1);
 
@@ -105,33 +116,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		{
 			JOptionPane.showMessageDialog(this, "You will now select files");
 			
-			JFileChooser FCGUI = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-
-			FCGUI.setMultiSelectionEnabled(true); // Enables selection of more than one file
-
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-			FCGUI.setFileFilter(filter); // Filter to make sure only text files can be selected
-
-			int x = FCGUI.showOpenDialog(this);
-
-			FCGUI.setDialogTitle("Choose File");
-			
-			if (x == JFileChooser.APPROVE_OPTION)
-			{
-
-				System.out.println("File Chosen" );
-				
-				
-				
-				File file = new File(FCGUI.getSelectedFile().getAbsolutePath());
-				
-				filename = file.getAbsolutePath();
-				
-
+			try {
+				FileChooser newFileChooser = new FileChooser();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-
-			
+		
 			check = true;
 	    }
      		
@@ -139,23 +130,23 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 
 		else if (event.getSource() == ResultsButton && check == true) 
 		{			
-		
 
-			Results result = new Results("Results GUI");
-
-			setVisible(false);
+			//result = new Results("Results Menu");
 			
+			
+				new Results(filename).setVisible(true);
+			
+		}
 
-	}
+		else
+		{
+			
+			JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
 
-	else
-	{
-		JOptionPane.showMessageDialog(this, "Click \"Choose files\" first!");
+		}	
+		}
 
-	}
-
-	}
-
+	
 	public String getFilename() {
 		return filename;
 	}
@@ -164,13 +155,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		this.filename = filename;
 	}
 
-	public File getFiles() {
-		return files;
-	}
-
-	public void setFiles(File file) {
-		this.files = file;
-	}
+	
 
 	public void mouseClicked(MouseEvent e) {
 
@@ -207,4 +192,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		// JOptionPane.showMessageDialog(this, "Mouse left the left panel");
 
 	}
+
+
+	
+	
 }

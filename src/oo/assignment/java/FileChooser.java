@@ -1,4 +1,4 @@
-/*package oo.assignment.java;
+package oo.assignment.java;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -41,57 +42,54 @@ import java.util.Random;
 
 public class FileChooser extends JPanel {
 	
-	private File [] files;
+	private File files;
 	private JFileChooser FC;
 	private FileNameExtensionFilter filter;
 	int x;
 	boolean check;
-	private Results result;
+	String line;
 		
-	FileChooser(File[] files,Results result) 
-	{
-		
-		this.result = result;
-		this.files = files;
-		
-	}
+	String[] data;
 	
-	public void FilePick() throws IOException 
+	FileChooser() throws IOException
 	{
+	
+		FC = new JFileChooser();
 
-		JFileChooser FCgui = new JFileChooser();
+		FC.setMultiSelectionEnabled(true); // Enables selection of more than one file
 
-		FCgui.setMultiSelectionEnabled(true); // Enables selection of more than one file
+		filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+		FC.setFileFilter(filter); // Filter to make sure only text files can be selected
 
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-		FCgui.setFileFilter(filter); // Filter to make sure only text files can be selected
+		FC.setDialogTitle("Choose File");
 
-		FCgui.setDialogTitle("Choose File");
-
-		int x = FCgui.showOpenDialog(null);
+		int x = FC.showOpenDialog(null);
 		
 
 
 		if (x == JFileChooser.APPROVE_OPTION)
 		{
-			files = FCgui.getSelectedFiles();
-			result = new Results(files);
-		
+			files = FC.getSelectedFile();
+			System.out.println("File Chosen" );
+			
+			BufferedReader abc = new BufferedReader(new FileReader(files));
+			List<String> lines = new ArrayList<String>();
+			
+			try {
+				while((line = abc.readLine()) != null) {
+				    lines.add(line);
+				    System.out.println(data);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			abc.close();
+
+			// If you want to convert to a String[]
+			String[] data = lines.toArray(new String[]{});
 		}
 		
-
-	}
-
-	public File[] getFiles() {
-		return files;
-	}
-
-	public void setFiles(File[] files) {
-		this.files = files;
-	}
-
-	public void setSelectedFiles(File[] files) {
-		this.setSelectedFiles(files);
 }
+
 }
-*/
