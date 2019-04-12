@@ -18,8 +18,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 
@@ -33,14 +37,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 	private JLabel label1;
 	boolean check;
 	int x;
-	File files;
+	private File files;
 	String filename;
-	Results result;
-	JFileChooser FCGUI;
+	private JFileChooser FCGUI;
 
 	
-	GUI(Results result) {
-		this.result = result;
+	GUI(File files) 
+	{
+		this.files = files;
 	}
 
 	// Constructor
@@ -101,14 +105,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		{
 			JOptionPane.showMessageDialog(this, "You will now select files");
 			
-			JFileChooser FCGUI = new JFileChooser();
+			JFileChooser FCGUI = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
 			FCGUI.setMultiSelectionEnabled(true); // Enables selection of more than one file
 
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 			FCGUI.setFileFilter(filter); // Filter to make sure only text files can be selected
 
-			int x = FCGUI.showOpenDialog(null);
+			int x = FCGUI.showOpenDialog(this);
 
 			FCGUI.setDialogTitle("Choose File");
 			
@@ -121,7 +125,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 				
 				File file = new File(FCGUI.getSelectedFile().getAbsolutePath());
 				
-				filename = file;
+				filename = file.getAbsolutePath();
+				
+
 			}
 			
 
@@ -133,25 +139,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 
 		else if (event.getSource() == ResultsButton && check == true) 
 		{			
-			//result.getFrequency();
-			//textarea.setText(result.getFrequency().values().toString()); 
-			// attempt to get print to tx area
-			
-			
-				//FileManager fm = new FileManager("names.txt");
-			Results result = new Results(filename);
+		
 
-			result.connectToFile();
-			try {
-				result.ReadFile();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			ArrayList<String> arr = result.getWord();
-			for(String ar : arr)
-			{
+			Results result = new Results("Results GUI");
 
-			}
+			setVisible(false);
 			
 
 	}

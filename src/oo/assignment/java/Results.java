@@ -2,38 +2,80 @@ package oo.assignment.java;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 
-public class Results
+public class Results extends JFrame implements ActionListener, MouseListener
 {
 	
-	PrintWriter pwInput;
-	
+	private JButton calcButton;
+	private JTextArea resultsArea;
 	private String filename;
 	private Scanner scanner;
 	private File files;
-	//private String[] arr = { "a", "the" }; // stop words
+		//private String[] arr = { "a", "the" }; // stop words
 	ArrayList<String> word = new ArrayList<String>();
 	ArrayList<Integer> count = new ArrayList<Integer>();
-	
 		
 	
-	// Constructor
-	Results(String filename)
-	{
+	  JPanel PanelN = new JPanel();
+	  JPanel PanelS = new JPanel();
+	  JPanel PanelC = new JPanel();
+	  
+	
+	public Results(String title) {
+		// set the title
+		super(title);
+
+		// sets the screen layout - in this case, border layout
+
+		// create a section of screen (panel) that will hold some GUI components
+		JPanel PanelN = new JPanel();
+		JPanel PanelC = new JPanel();
+		JPanel PanelS = new JPanel();
+
+		// add the panel to the screen ,set background colour and panel dimensions
+		add(PanelN, BorderLayout.NORTH);
+		PanelN.setBackground(Color.gray);
+		PanelN.setPreferredSize(new Dimension(580, 50));
+		add(PanelC, BorderLayout.CENTER);
+		PanelC.setBackground(Color.white);
+		add(PanelS, BorderLayout.SOUTH);
+		PanelS.setBackground(Color.gray);
+	
+		calcButton = new JButton("Calculate");
+		calcButton.setPreferredSize(new Dimension(140, 30));
+		calcButton.addActionListener(this);
 		
-		this.filename = filename;
+		resultsArea = new JTextArea();
+		resultsArea.setEditable(false);
+		this.setPreferredSize(new Dimension(200, 200));
+		this.add(resultsArea, BorderLayout.CENTER);
 		
+		PanelS.add(calcButton);
+	
+		// set the location of the screen
+				setLocation(500, 100);
+
+				// Define the size of the frame
+				setSize(600, 500);
+
+				// make the screen appear - without this, it doesn't!
+				setVisible(true);
+
 	}
-	
-	void connectToFile() 
-	{
-		files = new File(filename);
-	}
-	
 ArrayList<String> ReadFile() throws FileNotFoundException
 {
 	
@@ -59,25 +101,7 @@ ArrayList<String> ReadFile() throws FileNotFoundException
 	return word;
 	
 }
-
-void getFileWriter()
-{
-	try
-	{
-		pwInput = new PrintWriter(files);
-	}
-		catch (FileNotFoundException e)
-		{
-			System.out.println("run time error " + e.getMessage());
-		}
 	
-}	
-
-void writeLineToFile(String line)
-{
-   System.out.println(line);
-		pwInput.println(line);    	
-}	
 		/*String line = reader.readLine();
 		
 		while(line != null) {
@@ -146,6 +170,60 @@ public ArrayList<String> getWord() {
 
 public void setWord(ArrayList<String> word) {
 	this.word = word;
+}
+
+
+
+
+@Override
+public void mouseClicked(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void mouseEntered(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void mouseExited(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void mousePressed(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void mouseReleased(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
+@Override
+public void actionPerformed(ActionEvent arg0) {
+	// TODO Auto-generated method stub
+	
 }
 }
 
