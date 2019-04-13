@@ -59,24 +59,27 @@ public class FileChooser extends JPanel {
 
 		FC.setDialogTitle("Choose File");
 
-		int x = FC.showOpenDialog(null);
+		x = FC.showOpenDialog(null);
 
-		if (x == JFileChooser.APPROVE_OPTION) {
+		if (x == JFileChooser.APPROVE_OPTION) 
+		{
 			files = FC.getSelectedFile();
+			File [] file1 = FC.getSelectedFiles();
+
 			
 			filename = files.getAbsolutePath();
 			
+			
 			System.out.println("File chosen = "+filename+"\n");
-			
-			
-			
+						System.out.println("file == " +file1[0] + "\n"+file1[1]);
+						
 			Results result = new Results("Results Menu");
-			
-			result.setFile(files);
+
+			result.setFile(file1);
+			}
 			
 		}
 		
 		
 
 	}
-}

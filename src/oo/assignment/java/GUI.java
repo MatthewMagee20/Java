@@ -88,20 +88,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 		{
 			JOptionPane.showMessageDialog(this, "You will now select files");
 			
-			
 				try {
 					FileChooser = new FileChooser();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
 		
-			
+			}
 				setVisible(false);
 	    }
      		
-		}
-
-	
 	public String getFilename() {
 		return filename;
 	}

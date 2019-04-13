@@ -1,8 +1,7 @@
 package oo.assignment.java;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -12,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class Results extends JFrame implements ActionListener, MouseListener
 {
@@ -22,7 +23,7 @@ public class Results extends JFrame implements ActionListener, MouseListener
 	private JTextArea display;
 	private JLabel label;
 	private Scanner fileInput;
-	private File file;
+	private File [] file;
 	private String [] stopWords;
 	
 	public Results(String title) {
@@ -72,17 +73,15 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		// make the screen appear - without this, it doesn't!
 		setVisible(true);
 		
-	}
-	
-
-
+	}	
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == freqWords)
 		{
 			
-			
+			for(int j = 0; j < 2; j++)
+			{
 				try {
-					fileInput = new Scanner(file);
+					fileInput = new Scanner(file[j]);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,6 +110,8 @@ public class Results extends JFrame implements ActionListener, MouseListener
 			
 			fileInput.close();
 			
+			System.out.println(file[j].getName() + " word frequency");
+			
 			for(int i = 0; i < words.size(); i ++)
 			{
 				
@@ -119,6 +120,11 @@ public class Results extends JFrame implements ActionListener, MouseListener
 				System.out.println("     "+words.get(i)+" = " + count.get(i)+ " time/s");
 		
 			}
+			
+			System.out.println("");
+
+			System.out.println("  ----- End -----");
+			System.out.println("");
 		}
 		
 		if(event.getSource() == remStopWords)
@@ -128,8 +134,11 @@ public class Results extends JFrame implements ActionListener, MouseListener
 			
 			stopWords = sw.getStopWordsArray();
 			
+			for(int p = 0; p < 2; p++)
+			{
+			
 			try {
-				fileInput = new Scanner(file);
+				fileInput = new Scanner(file[p]);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,14 +164,19 @@ public class Results extends JFrame implements ActionListener, MouseListener
 			
 			}
 			
+			ArrayList<String> wordsClean = new ArrayList<String>();
+
 			 for (int j = 0; j < stopWords.length; j++) {
 	                if (words.contains(stopWords[j])) {
 	                    words.remove(stopWords[j]);
+	                    wordsClean.add(j,words.get(j));
+	                    
 	                }
 	            }
 			
 			fileInput.close();
 
+			System.out.println(file[p].getName() + " without stopwords");
 			for(int i = 0; i < words.size(); i ++)
 			{
 				
@@ -171,8 +185,14 @@ public class Results extends JFrame implements ActionListener, MouseListener
 				System.out.println("     "+words.get(i));
 				
 			}
+			
+			System.out.println("----- End -----");
+			System.out.println("");
+			
 		}
 			}
+	}
+	}
 	
 
 			
@@ -192,11 +212,11 @@ public class Results extends JFrame implements ActionListener, MouseListener
 
 
 
-	public File getFile() {
+	public File [] getFile() {
 		return file;
 	}
 
-	public void setFile(File file) {
+	public void setFile(File [] file) {
 		this.file = file;
 	}
 	
@@ -222,12 +242,13 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }
 
