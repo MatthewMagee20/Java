@@ -1,3 +1,11 @@
+/****************************************
+* Control: Purpose of this class is for the user to select an array of files
+* which will then be passed to the Results class, where all the handling will happen.
+* 
+* Author: Matthew Magee
+* 
+*****************************************/
+
 package oo.assignment.java;
 
 import javax.swing.*;
@@ -52,28 +60,24 @@ public class FileChooser extends JPanel {
 
 		FC = new JFileChooser();
 
-		FC.setMultiSelectionEnabled(true); // Enables selection of more than one file
+		FC.setMultiSelectionEnabled(true); 										// Enables selection of more than one file
 
-		filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-		FC.setFileFilter(filter); // Filter to make sure only text files can be selected
+		filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");		// Filter to make sure only text files can be selected
+		FC.setFileFilter(filter); 
 
-		FC.setDialogTitle("Choose File");
+		FC.setDialogTitle("Choose File"); 										// Sets title of JFileChooser GUI
 
 		x = FC.showOpenDialog(null);
 
 		if (x == JFileChooser.APPROVE_OPTION) 
 		{
-			files = FC.getSelectedFile();
 			File [] file1 = FC.getSelectedFiles();
 
-			
 			filename = files.getAbsolutePath();
 			
-			
-			System.out.println("File chosen = "+filename+"\n");
-						System.out.println("file == " +file1[0] + "\n"+file1[1]);
+			System.out.println("file == " +file1[0] + "\n"+file1[1]); 			//Print path of file
 						
-			Results result = new Results("Results Menu");
+			Results result = new Results("Results Menu"); 						// Instantiate new Results Object
 
 			result.setFile(file1);
 			}

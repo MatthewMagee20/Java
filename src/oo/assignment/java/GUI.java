@@ -32,52 +32,32 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 
 	// Attributes
 	private JButton ChooseFileButton;
-	private JButton ResultsButton;
-	private JButton open;
-	private JTextArea textarea;
-	private JLabel label1;
-	private boolean check;
-	private Scanner scanner;
-	private int x;
-	private File file;
-	private String filename;
 	private FileChooser FileChooser;
-	Results Results;
-	
 	
 	// Constructor
-	public GUI(String title) {
+	public GUI(String title) 
+	{
 		// set the title
 		super(title);
 
-		// sets the screen layout - in this case, border layout
+		
+		JPanel PanelC = new JPanel();									 // create a section of screen (panel) that will hold some GUI components
 
-		// create a section of screen (panel) that will hold some GUI components
-		JPanel PanelC = new JPanel();
-
-		// add the panel to the screen ,set background colour
-		add(PanelC);
+		add(PanelC);													// add the panel to the screen ,set background colour
 		PanelC.setBackground(Color.white);
 			
-		ChooseFileButton = new JButton("Choose Files");
+		
+		ChooseFileButton = new JButton("Choose Files");					//Instantiate Button and add it to PanelC
 		ChooseFileButton.setPreferredSize(new Dimension(140, 30));
 		ChooseFileButton.addActionListener(this);
-
 		ChooseFileButton.setLayout(null);
 		PanelC.add(ChooseFileButton);
 		
-		  
+		setLocation(700, 200);											// set the location of the screen
 		
-		//ChooseFileButton.setLocation(135, 80);
+		setSize(300, 300);												// Define the size of the frame
 
-
-		// set the location of the screen
-		setLocation(700, 200);
-		// Define the size of the frame
-		setSize(300, 300);
-
-		// make the screen appear - without this, it doesn't!
-		setVisible(true);
+		setVisible(true);												// make the screen appear - without this, it doesn't!
 
 	}
 
@@ -97,26 +77,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener {
 			}
 				setVisible(false);
 	    }
-     		
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
 	
-
+	// #################### Unimplemented methods ####################
+     	
 	public void mouseClicked(MouseEvent e) {
 
-		if (SwingUtilities.isLeftMouseButton(e)) {
-			// JOptionPane.showMessageDialog(this, "Left Click");
-
-		} else if (SwingUtilities.isRightMouseButton(e)) {
-			// JOptionPane.showMessageDialog(this, "Right Click");
-
-		}
 	}
 
 	@Override
