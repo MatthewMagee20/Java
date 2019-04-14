@@ -6,6 +6,7 @@ import java.util.Scanner;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +20,20 @@ import java.io.FileReader;
 public class Results extends JFrame implements ActionListener, MouseListener
 {
 	private JButton freqWords;
+	private boolean check = false;
 	private JButton remStopWords;
 	private JTextArea display;
 	private JLabel label;
 	private Scanner fileInput;
+	private Scanner freqScanner;
 	private File [] file;
 	private String [] stopWords;
+	ArrayList<String> words = new ArrayList<String>();
+	ArrayList<Integer> count = new ArrayList<Integer>();
+	ArrayList<String> nWords = new ArrayList<String>();
 	
+
+
 	public Results(String title) {
 		// set the title
 		super(title);
@@ -33,22 +41,20 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		file = getFile();
 	
 		JPanel PanelN = new JPanel();
-		JPanel PanelC = new JPanel();
-		JPanel PanelS = new JPanel();
+		JPanel PanelC = new JPanel();	
 
 		// add the panel to the screen ,set background colour and panel dimensions
+		
 		add(PanelN, BorderLayout.NORTH);
 		PanelN.setBackground(Color.gray);
 		PanelN.setPreferredSize(new Dimension(580, 50));
 		add(PanelC, BorderLayout.CENTER);
-		PanelC.setBackground(Color.white);
-		add(PanelS, BorderLayout.SOUTH);
-		PanelS.setBackground(Color.gray);
+		PanelC.setBackground(Color.white);	
 		
 		label = new JLabel("Please choose an Option");
-		PanelN.add(label);
+		PanelC.add(label);
 		
-		freqWords = new JButton("Most Frequent words");
+		freqWords = new JButton("Word Frequency");
 		freqWords.setPreferredSize(new Dimension(140, 30));
 		freqWords.addActionListener(this);
 
@@ -57,10 +63,10 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		remStopWords.addActionListener(this);
 
 		display = new JTextArea();
-		display.setEditable(false);
+		display.setEditable(false);		
 		this.setPreferredSize(new Dimension(200, 200));
 		this.add(display, BorderLayout.CENTER);
-
+		
 		PanelN.add(remStopWords);
 		PanelN.add(freqWords);
 		
@@ -74,132 +80,74 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		setVisible(true);
 		
 	}	
+
 	public void actionPerformed(ActionEvent event) {
-		if(event.getSource() == freqWords)
+	
+		for(int l = 0; l < file.length; l++)
 		{
-			
-			for(int j = 0; j < 2; j++)
-			{
-				try {
-					fileInput = new Scanner(file[j]);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-					
-			ArrayList<String> words = new ArrayList<String>();
-			ArrayList<Integer> count = new ArrayList<Integer>();
 
-			while(fileInput.hasNext())
-			{
-				String nextWord = fileInput.next();
-				
-				if(words.contains(nextWord))
-				{
-					int index = words.indexOf(nextWord);
-					count.set(index, count.get(index)+ 1);
-					
-				}
-				else {
-					words.add(nextWord);
-					count.add(1);
-					
-				}
-			}
-			
-			fileInput.close();
-			
-			System.out.println(file[j].getName() + " word frequency");
-			
-			for(int i = 0; i < words.size(); i ++)
-			{
-				
-
-				System.out.println("____________________________________");
-				System.out.println("     "+words.get(i)+" = " + count.get(i)+ " time/s");
-		
-			}
-			
-			System.out.println("");
-
-			System.out.println("  ----- End -----");
-			System.out.println("");
-		}
-		
 		if(event.getSource() == remStopWords)
 		{
-			
+			check = true;
+		
 			StopWords sw = new StopWords();
 			
 			stopWords = sw.getStopWordsArray();
 			
-			for(int p = 0; p < 2; p++)
-			{
 			
 			try {
-				fileInput = new Scanner(file[p]);
+				fileInput = new Scanner(file[l]);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			//ArrayList<String> remStop = new ArrayList<>(Arrays.asList(stopWords));
-			
-			ArrayList<String> words = new ArrayList<String>();
-
 			while(fileInput.hasNext())
 			{
 				String nextWord = fileInput.next().toLowerCase();
 				
 				if(words.contains(nextWord))
 				{
-					int i = words.indexOf(nextWord);
-					
+					int index = words.indexOf(nextWord);
+					count.set(index,count.get(index)+1);
 				}
+				
 				else {
 					words.add(nextWord);
-					
+					count.add(1);
 				}
-			
-			}
-			
-			ArrayList<String> wordsClean = new ArrayList<String>();
-
-			 for (int j = 0; j < stopWords.length; j++) {
-	                if (words.contains(stopWords[j])) {
-	                    words.remove(stopWords[j]);
-	                    wordsClean.add(j,words.get(j));
-	                    
+		
+				for (int i = 0; i < stopWords.length; i++) 
+				{
+	                if (words.contains(stopWords[i])) 
+	                {
+	                    words.remove(stopWords[i]);
 	                }
+	               
+
 	            }
 			
-			fileInput.close();
-
-			System.out.println(file[p].getName() + " without stopwords");
-			for(int i = 0; i < words.size(); i ++)
-			{
-				
-
-				System.out.println("____________________________________");
-				System.out.println("     "+words.get(i));
-				
 			}
 			
-			System.out.println("----- End -----");
-			System.out.println("");
+			display.append("--- FREQUENCY OF WORDS IN TEXT FILE WITH STOP WORDS REMOVED ---\n");
+		
+		for(int i = 0; i < words.size(); i++)
+		{
+			display.append("\n");
+			display.append(words.get(i)+" " +count.get(i)+"\n");
 			
 		}
-			}
-	}
-	}
+		
 	
+		fileInput.close();
 
-			
-
-
-
-			
+		}
+		
+		}
+		
+		display.append("\n\n");
+		}
+	
 	public String[] getStopWords() {
 		return stopWords;
 	}
@@ -216,8 +164,8 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		return file;
 	}
 
-	public void setFile(File [] file) {
-		this.file = file;
+	public void setFile(File[] file1) {
+		this.file = file1;
 	}
 	
 	public void mouseClicked(MouseEvent arg0) {
@@ -242,13 +190,12 @@ public class Results extends JFrame implements ActionListener, MouseListener
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 
 }
 

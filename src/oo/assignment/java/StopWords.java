@@ -26,7 +26,7 @@ public class StopWords {
 			"furthermore", "get", "gets", "getting", "given", "gives", "go", "goes", "going", "gone",
 			"got", "gotten", "greetings", "had", "hadnt", "happens", "hardly", "has", "hasnt", "have",
 			"havent", "having", "he", "hes", "hello", "help", "hence", "her", "here", "heres", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "hopefully", "how", "howbeit", "however", 
-			"i", "id", "ill", "im", "ive", "ie", "if", "ignored", "immediate", "in", "inasmuch", "inc", "indeed", "indicate", "indicated", "indicates", "inner", "insofar", "instead", "into", "inward", "is", "isnt", "it", "itd", "itll", "its", "its", "itself", 
+			"i", "id", "ill", "i’m", "ive", "ie", "if", "ignored", "immediate", "in", "inasmuch", "inc", "indeed", "indicate", "indicated", "indicates", "inner", "insofar", "instead", "into", "inward", "is", "isn't", "it", "itd", "itll", "its", "its", "itself", 
 			"just", 
 			"keep", "keeps", "kept", "know", "knows", "known", 
 			"last", "lately", "later", "latter", "latterly", "least", "less", "lest", "let", "lets", "like", "liked", "likely", "little", "look", "looking", "looks", "ltd", 
