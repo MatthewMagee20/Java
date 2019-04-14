@@ -1,200 +1,217 @@
+/****************************************
+* 
+* Results: Receives file array from FileChooser class
+* 
+* Counts for word frequency using 2 Array lists
+* 
+* Removes stop words
+* 
+* Author: Matthew Magee
+* 
+*****************************************/
+
+
 package oo.assignment.java;
 
 import java.util.ArrayList;
-import java.util.*;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+//loop to find frequency of words in file is not my own work
+
+//https://www.youtube.com/watch?v=jsZo3JBjr90
 
 public class Results extends JFrame implements ActionListener, MouseListener
 {
-	private JButton freqWords;
-	private boolean check = false;
-	private JButton remStopWords;
+	//Attributes
+	private JButton printCalc;
 	private JTextArea display;
-	private JLabel label;
-	private Scanner fileInput;
-	private Scanner freqScanner;
-	private File [] file;
+	private Scanner fileScanner;
+	private JScrollPane scrollBar; 
+	private File [] files;
 	private String [] stopWords;
-	ArrayList<String> words = new ArrayList<String>();
-	ArrayList<Integer> count = new ArrayList<Integer>();
-	ArrayList<String> nWords = new ArrayList<String>();
+	private ArrayList<String> words = new ArrayList<String>();
+	private ArrayList<Integer> wordCount = new ArrayList<Integer>();
+	
+	//private ArrayList<String> nWords = new ArrayList<String>();
 	
 
 
 	public Results(String title) {
-		// set the title
+		
 		super(title);
 			
-		file = getFile();
+		files = getFile();																	//file = file array from FileChooser class									
 	
-		JPanel PanelN = new JPanel();
-		JPanel PanelC = new JPanel();	
-
-		// add the panel to the screen ,set background colour and panel dimensions
-		
-		add(PanelN, BorderLayout.NORTH);
+		JPanel PanelN = new JPanel();														// Create new Panel
+		add(PanelN, BorderLayout.NORTH);													// add the panel to the screen 
 		PanelN.setBackground(Color.gray);
-		PanelN.setPreferredSize(new Dimension(580, 50));
-		add(PanelC, BorderLayout.CENTER);
-		PanelC.setBackground(Color.white);	
+		PanelN.setPreferredSize(new Dimension(900, 50));
 		
-		label = new JLabel("Please choose an Option");
-		PanelC.add(label);
-		
-		freqWords = new JButton("Word Frequency");
-		freqWords.setPreferredSize(new Dimension(140, 30));
-		freqWords.addActionListener(this);
+		printCalc = new JButton("Results");													// Create new Button
+		printCalc.setPreferredSize(new Dimension(140, 30));
+		printCalc.addActionListener(this);
+		PanelN.add(printCalc);																// Add button to panel
 
-		remStopWords = new JButton("Remove Stop Words");
-		remStopWords.setPreferredSize(new Dimension(140, 30));
-		remStopWords.addActionListener(this);
-
-		display = new JTextArea();
+		display = new JTextArea();															// Create JTextArea
 		display.setEditable(false);		
-		this.setPreferredSize(new Dimension(200, 200));
-		this.add(display, BorderLayout.CENTER);
 		
-		PanelN.add(remStopWords);
-		PanelN.add(freqWords);
-		
-		// set the location of the screen
-		setLocation(500, 100);
-
-		// Define the size of the frame
-		setSize(600, 500);
-
-		// make the screen appear - without this, it doesn't!
-		setVisible(true);
+		scrollBar = new JScrollPane(display);												// Create vertical Scroll Bar (Found on JavaAPI)
+        scrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);  		
+        add(scrollBar); 																	// Add to panel
+        
+        setLocation(500, 100);																// set the location of the screen
+		setSize(900, 900);																	// Define the size of the frame
+		setVisible(true);																	// make the screen appear
 		
 	}	
 
 	public void actionPerformed(ActionEvent event) {
 	
-		for(int l = 0; l < file.length; l++)
-		{
-
-		if(event.getSource() == remStopWords)
-		{
-			check = true;
-		
-			StopWords sw = new StopWords();
+		if(event.getSource() == printCalc)
+		{	
 			
-			stopWords = sw.getStopWordsArray();
-			
-			
-			try {
-				fileInput = new Scanner(file[l]);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			while(fileInput.hasNext())
+			for(int l = 0; l < files.length; l++)											// for loop to iterate through file array
 			{
-				String nextWord = fileInput.next().toLowerCase();
 				
-				if(words.contains(nextWord))
+				StopWords sWords = new StopWords();											// Create new stopWords object
+			
+				stopWords = sWords.getStopWordsArray();										// Assign stop words from class to stopWords variable
+			
+				try 
 				{
+					fileScanner = new Scanner(files[l]);
+				} 
+				catch (FileNotFoundException e) 
+				{
+					e.printStackTrace();
+				}
+			
+			while(fileScanner.hasNext())
+			{
+				
+				String nextWord = fileScanner.next().toLowerCase();							// Convert word to lower case, so stop words can be removed
+				
+				if(words.contains(nextWord))												// If words array already contains the net word in the file
+				{																			// the count for the word is incremented by 1
+					
 					int index = words.indexOf(nextWord);
-					count.set(index,count.get(index)+1);
+					wordCount.set(index,wordCount.get(index)+1);
+					
 				}
 				
-				else {
+				else 																		// Else, the word is added to the list
+				{																			// Count for word is set to 1
+					
 					words.add(nextWord);
-					count.add(1);
+					wordCount.add(1);
+					
 				}
 		
-				for (int i = 0; i < stopWords.length; i++) 
+				for (int i = 0; i < stopWords.length; i++) 									//For loop to remove stop words	
 				{
+					
 	                if (words.contains(stopWords[i])) 
 	                {
+	                	
 	                    words.remove(stopWords[i]);
+	                    
 	                }
 	               
-
-	            }
+				}
 			
 			}
 			
-			display.append("--- FREQUENCY OF WORDS IN TEXT FILE WITH STOP WORDS REMOVED ---\n");
+			// For readability
+			display.append("\""+files[l]+"\"");
+			
+			display.append("\n");
+			display.append("\n");
+
+			display.append("-- STOP WORDS REMOVED --");
+			
+			display.append("\n");
+			display.append("\n");
+
+			display.append("-- WORDS WILL DISPLAY FREQUENCY --");
+			display.append("\n");
+			display.append("\n");
 		
 		for(int i = 0; i < words.size(); i++)
 		{
+			
 			display.append("\n");
-			display.append(words.get(i)+" " +count.get(i)+"\n");
+			
+			display.append("\""+words.get(i)+"\""+" occured " +wordCount.get(i)+" time/s");
+			
+			display.append("\n");
+			display.append("\n");
+
 			
 		}
 		
+		display.append("\n");
+		display.append("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		display.append("\n");
+		display.append("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		display.append("\n");
+		
 	
-		fileInput.close();
 
 		}
 		
-		}
+	}
 		
+		fileScanner.close();
+
 		display.append("\n\n");
-		}
+}
+	
+	
+	// 									Getter and Setter Methods
+	
 	
 	public String[] getStopWords() {
 		return stopWords;
 	}
 
-
-
 	public void setStopWords(String[] stopWords) {
 		this.stopWords = stopWords;
 	}
 
-
-
 	public File [] getFile() {
-		return file;
+		return files;
 	}
 
 	public void setFile(File[] file1) {
-		this.file = file1;
+		this.files = file1;
 	}
 	
+	
+	//								Unimplemented methods
+	
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mousePressed(MouseEvent arg0) {		
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -1,4 +1,20 @@
+/****************************************
+* 
+* StopWords: This class holds an array of stop words 
+* 
+* that will be removed from the words ArrayList in
+* 
+* the Results class
+* 
+*****************************************/
+
 package oo.assignment.java;
+
+//The following array is not my own work
+
+//Found on https://stackoverflow.com/
+
+//Can't find original post
 
 public class StopWords {
 
